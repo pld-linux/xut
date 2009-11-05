@@ -1,0 +1,15 @@
+--- xut/Makefile.in~	2009-10-10 17:48:37.000000000 +0200
++++ xut/Makefile.in	2009-11-05 15:06:04.000000000 +0100
+@@ -64,10 +64,10 @@
+ install: $(BIN)xut
+ 	@printf "Installing XUT bin files... "
+ 	@mkdir -p $(bindir)/
+-	@$(INSTALL) -c -m 755 $(BIN)xut $(bindir)/
++	@$(INSTALL) -c -m 755 $(BIN)xut $(DESTDIR)$(bindir)/
+ 	@printf "\e[0;32mDone.\e[0;0m\n"
+ 	@printf "Installing XUT data files... "
+-	@sh install.sh $(datadir) $(PACKAGE) $(INSTALL)
++	@sh install.sh $(DESTDIR)$(datadir) $(PACKAGE) $(INSTALL)
+ 	@printf "\e[0;32mDone.\e[0;0m\n"
+ 	@printf "Installing XUT Language files... "
+ 	@cd ./po && ${MAKE} install > /dev/null ;
