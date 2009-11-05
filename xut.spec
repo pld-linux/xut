@@ -1,6 +1,5 @@
 #
 # TODO: - fix auto tools
-#	- move linking to Makefiles
 #
 %define		file_version %(echo %{version} | tr . _)
 Summary:	A button football simulation
@@ -13,6 +12,7 @@ Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/digenv/%{name}_%{file_version}_src.tar.bz2
 # Source0-md5:	66c4bcd2ebc0fb5762bdea1df0db5a94
 Patch0:		%{name}-makefile.patch
+Patch1:		%{name}-link.patch
 URL:		http://xut.dnteam.org
 BuildRequires:	OpenAL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -37,6 +37,7 @@ XUT egy project, amelynek a célja egy gombfoci szimulátor létrehozása.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 #%%{__aclocal}
@@ -44,10 +45,6 @@ XUT egy project, amelynek a célja egy gombfoci szimulátor létrehozása.
 #%%{__automake}
 %configure
 %{__make}
-
-# link manually (there is no linking workaround in sources)
-cd src
-%{__cc} %{rpmcflags} %{rpmldflags} -o ../bin/%{name} `find -name "*.o"` -lopenal `sdl-config --libs` -lSDL_gfx -lSDL_image -lSDL_ttf -lcal3d -logg -lGL -lGLU -lvorbisfile
 
 %install
 rm -rf $RPM_BUILD_ROOT
