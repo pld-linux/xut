@@ -1,0 +1,11 @@
+--- xut/src/engine/Makefile.in~	2009-10-10 17:48:37.000000000 +0200
++++ xut/src/engine/Makefile.in	2009-11-05 15:44:46.000000000 +0100
+@@ -113,7 +113,7 @@
+ 
+ xut: $(ALONEOBJS)
+ 	@printf "Linking xut... "
+-	@$(CC) $(LDFLAGS) $(LIBS) $(EFLAGS) $(ALONEOBJS) -o $(BIN)xut
++	@$(CC) $(LDFLAGS)  $(EFLAGS) $(ALONEOBJS) -o $(BIN)xut $(LIBS)
+ 	@printf "\e[0;32mDone.\e[0;0m\n"
+ 
+ #end stand alone things
