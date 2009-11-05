@@ -5,7 +5,7 @@
  xut: $(ALONEOBJS)
  	@printf "Linking xut... "
 -	@$(CC) $(LDFLAGS) $(LIBS) $(EFLAGS) $(ALONEOBJS) -o $(BIN)xut
-+	@$(CC) $(LDFLAGS)  $(EFLAGS) $(ALONEOBJS) -o $(BIN)xut $(LIBS)
++	@$(CC) $(LDFLAGS) $(EFLAGS) $(ALONEOBJS) -o $(BIN)xut $(LIBS)
  	@printf "\e[0;32mDone.\e[0;0m\n"
  
  #end stand alone things

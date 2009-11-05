@@ -4,6 +4,7 @@
 %define		file_version %(echo %{version} | tr . _)
 Summary:	A button football simulation
 Summary(hu.UTF-8):	Gombfoci szimuláció
+Summary(pl.UTF-8):	Symulator piłki nożnej
 Name:		xut
 Version:	0.2
 Release:	0.1
@@ -26,6 +27,7 @@ BuildRequires:	cal3d-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,10 +36,16 @@ XUT is a project to make a button football game simulation.
 %description -l hu.UTF-8
 XUT egy project, amelynek a célja egy gombfoci szimulátor létrehozása.
 
+%description -l pl.UTF-8
+XUT jest projektem "guzikowego" symulatora piłki nożnej.
+
 %prep
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+
+# remove ugly special chars from echo outputs
+%{__sed} -i 's/\[0;32m//;s/\[0;0m//;s/\\e//g' `find -name Makefile.in`
 
 %build
 #%%{__aclocal}
