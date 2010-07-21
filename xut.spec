@@ -6,7 +6,7 @@ Summary(hu.UTF-8):	Gombfoci szimuláció
 Summary(pl.UTF-8):	Symulator piłki nożnej
 Name:		xut
 Version:	0.2.1
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		X11/Applications/Games
 Source0:	http://downloads.sourceforge.net/digenv/%{name}-%{version}.tar.bz2
