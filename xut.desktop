@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=XUT
+Comment=A button football simulation
+Comment[hu]=Gombfoci szimuláció
+Comment[pl]=Symulator piłki nożnej
+Icon=xut
+Exec=xut
+Terminal=false
+Type=Application
+Categories=Game;ArcadeGame;
+# vi: encoding=utf-8
