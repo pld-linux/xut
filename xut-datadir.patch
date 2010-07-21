@@ -1,0 +1,21 @@
+--- xut/src/etc/dirs.cpp~	2010-07-14 21:43:00.000000000 +0200
++++ xut/src/etc/dirs.cpp	2010-07-21 16:29:37.103466659 +0200
+@@ -29,6 +29,7 @@
+       /* Try to open at defined datadir */
+       file = DATADIR;
+       file += "/";
++      file += "games/";
+       file += PACKAGE;
+       file += "/fnts/arial.ttf";
+       if((arq = fopen(file.c_str(),"r")))
+--- xut/Makefile.in~	2010-07-21 16:30:25.090123985 +0200
++++ xut/Makefile.in	2010-07-21 16:30:46.345964629 +0200
+@@ -67,7 +67,7 @@
+ 	@$(INSTALL) -c -m 755 $(BIN)xut $(DESTDIR)$(bindir)/
+ 	@printf "\e[0;32mDone.\e[0;0m\n"
+ 	@printf "Installing XUT data files... "
+-	@sh install.sh $(DESTDIR)$(datadir) $(PACKAGE) $(INSTALL)
++	@sh install.sh $(DESTDIR)$(datadir)/games $(PACKAGE) $(INSTALL)
+ 	@printf "\e[0;32mDone.\e[0;0m\n"
+ 	@printf "Installing XUT Language files... "
+ 	@cd ./po && ${MAKE} install > /dev/null ;
