@@ -14,7 +14,6 @@ Source0:	http://downloads.sourceforge.net/digenv/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Patch0:		%{name}-makefile.patch
 Patch1:		%{name}-link.patch
-Patch2:		%{name}-datadir.patch
 URL:		http://xut.dnteam.org
 BuildRequires:	OpenAL-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -43,13 +42,15 @@ XUT jest projektem "guzikowego" symulatora piłki nożnej.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 #%%{__aclocal}
 #%%{__autoconf}
 #%%{__automake}
-%configure
+%configure \
+	--datarootdir=%{_datadir}/games \
+	--datadir=%{_datadir}/games \
+	--localedir=%{_datadir}/locale
 %{__make}
 
 %install
@@ -70,6 +71,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/xut
-%{_datadir}/%{name}
+%{_datadir}/games/%{name}
 %{_desktopdir}/xut.desktop
 %{_pixmapsdir}/xut.png
