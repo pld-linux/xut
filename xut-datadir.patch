@@ -1,21 +1,106 @@
---- xut/src/etc/dirs.cpp~	2010-07-14 21:43:00.000000000 +0200
-+++ xut/src/etc/dirs.cpp	2010-07-21 16:29:37.103466659 +0200
-@@ -29,6 +29,7 @@
-       /* Try to open at defined datadir */
-       file = DATADIR;
-       file += "/";
-+      file += "games/";
-       file += PACKAGE;
-       file += "/fnts/arial.ttf";
-       if((arq = fopen(file.c_str(),"r")))
---- xut/Makefile.in~	2010-07-21 16:30:25.090123985 +0200
-+++ xut/Makefile.in	2010-07-21 16:30:46.345964629 +0200
-@@ -67,7 +67,7 @@
- 	@$(INSTALL) -c -m 755 $(BIN)xut $(DESTDIR)$(bindir)/
- 	@printf "\e[0;32mDone.\e[0;0m\n"
- 	@printf "Installing XUT data files... "
--	@sh install.sh $(DESTDIR)$(datadir) $(PACKAGE) $(INSTALL)
-+	@sh install.sh $(DESTDIR)$(datadir)/games $(PACKAGE) $(INSTALL)
- 	@printf "\e[0;32mDone.\e[0;0m\n"
- 	@printf "Installing XUT Language files... "
- 	@cd ./po && ${MAKE} install > /dev/null ;
+--- xut/src/engine/xut.cpp~	2010-07-14 21:43:00.000000000 +0200
++++ xut/src/engine/xut.cpp	2010-07-21 22:17:35.977259246 +0200
+@@ -62,7 +62,7 @@
+    teamB = NULL;
+ 
+    /* Create Goals */
+-   goals = new goal("models/goal/model.cfg");
++   goals = new goal("/usr/share/xut/models/goal/model.cfg");
+ 
+    /* Create Balls */
+    gameBall = new ball();
+@@ -85,13 +85,13 @@
+    switch(opt.getFieldDetail())
+    {
+       case XUT_OPTIONS_FIELD_DETAIL_LOW:
+-         gameField->createField("models/field/botao_campo_512.png");
++         gameField->createField("/usr/share/xut/models/field/botao_campo_512.png");
+       break;
+       case XUT_OPTIONS_FIELD_DETAIL_NORMAL:
+-         gameField->createField("models/field/botao_campo.png");
++         gameField->createField("/usr/share/xut/models/field/botao_campo.png");
+       break;
+       case XUT_OPTIONS_FIELD_DETAIL_HIGH:
+-         gameField->createField("models/field/botao_campo_2048.png");
++         gameField->createField("/usr/share/xut/models/field/botao_campo_2048.png");
+       break;
+    }
+  
+@@ -391,7 +391,7 @@
+          /* init a contact sound */
+          snd.addSoundEffect(selectedPlayer->getPosX(), 0,
+                             selectedPlayer->getPosZ(), -1, 
+-                            "sndfx/disk_shoot.ogg");
++                            "/usr/share/xut/sndfx/disk_shoot.ogg");
+ 
+          /* Unselect the player */
+          selectedPlayer = NULL;
+@@ -541,7 +541,7 @@
+       case RULE_STATE_MIDDLE:
+       {
+          /* A goal occurs, so call the goal sound effect */
+-         snd.addSoundEffect(-1, "sndfx/goal.ogg");
++         snd.addSoundEffect(-1, "/usr/share/xut/sndfx/goal.ogg");
+          /* And  the replay */
+          replayer->renderReplay(cursors);
+          /* Clear the replay data */
+@@ -552,7 +552,7 @@
+          gameCamera->updateCamera(gameBall->getPosX(), 0.0f, 
+                                   gameBall->getPosZ(), 0.0f);
+          /* And the referee horn! */
+-         snd.addSoundEffect(-1, "sndfx/apito.ogg");
++         snd.addSoundEffect(-1, "/usr/share/xut/sndfx/apito.ogg");
+       }
+       break;
+ 
+@@ -563,7 +563,7 @@
+       case RULE_STATE_PENALTY_KICK:
+       {
+          /* the referee horn! */
+-         snd.addSoundEffect(-1, "sndfx/apito.ogg");
++         snd.addSoundEffect(-1, "/usr/share/xut/sndfx/apito.ogg");
+          
+          /* Set The Position */
+          rulesSystem->setPositions();
+@@ -681,7 +681,7 @@
+ {
+    dirs dir;
+    glGenTextures(1, &bgTexture);
+-   SDL_Surface* img = IMG_Load(dir.getRealFile("gui/fundo.png").c_str());
++   SDL_Surface* img = IMG_Load(dir.getRealFile("/usr/share/xut/gui/fundo.png").c_str());
+    if(img)
+    {
+       setTextureRGBA(img, bgTexture);
+@@ -704,7 +704,7 @@
+    Uint32 t = SDL_GetTicks();
+ 
+    SDL_Surface* img;
+-   img = IMG_Load(dir.getRealFile("gui/inicio1.png").c_str()); 
++   img = IMG_Load(dir.getRealFile("/usr/share/xut/gui/inicio1.png").c_str()); 
+    glDisable(GL_LIGHTING);
+    glDisable(GL_FOG);
+ 
+--- xut/src/gui/maingui.cpp~	2010-07-14 21:43:00.000000000 +0200
++++ xut/src/gui/maingui.cpp	2010-07-21 22:15:14.364366614 +0200
+@@ -41,8 +41,8 @@
+    glGenTextures(MAIN_GUI_TOTAL_BUTTONS, textures);
+ 
+    /* Load All Buttons */
+-   loadButtonTexture(MAIN_GUI_BUTTON_SHOOT, "gui/main/goal.png");
+-   loadButtonTexture(MAIN_GUI_BUTTON_REPLAY,"gui/main/replay.png");
++   loadButtonTexture(MAIN_GUI_BUTTON_SHOOT, "/usr/share/xut/gui/main/goal.png");
++   loadButtonTexture(MAIN_GUI_BUTTON_REPLAY,"/usr/share/xut/gui/main/replay.png");
+ }
+ 
+ /***********************************************************************
+--- xut/src/etc/cursor.cpp~	2010-07-14 21:43:00.000000000 +0200
++++ xut/src/etc/cursor.cpp	2010-07-21 22:13:11.007281457 +0200
+@@ -14,7 +14,7 @@
+    glGenTextures(CURSOR_TOTAL, texture);
+ 
+    /* Load Cursors */
+-   loadCursor("cursors/sel.png", CURSOR_SELECTOR);
++   loadCursor("/usr/share/xut/cursors/sel.png", CURSOR_SELECTOR);
+    currentCursor = CURSOR_SELECTOR;
+ }
+ 
